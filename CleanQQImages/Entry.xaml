@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="CleanQQImages.Entry"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+         xmlns:local="clr-namespace:CleanQQImages"
+         Name="Root"
+         mc:Ignorable="d"
+         d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ui:Card Grid.Row="0" Margin="8">
+            <Grid Name="TencentFiles路径">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+        
+                <ui:TextBlock Grid.Column="0" Text="Tencent Files 路径：" VerticalAlignment="Center" />
+                <ui:TextBox Grid.Column="1" VerticalAlignment="Center"
+                            Text="{Binding TencentFiles, ElementName=Root}" />
+                <Button Grid.Column="2" VerticalAlignment="Center" Margin="10, 0, 10, 0" Click="SelectTencentFilesPath">选择</Button>
+            </Grid>
+        </ui:Card>
+        
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0, 10, 10">
+            <ui:ListView
+                ItemsSource="{Binding QQFolders, ElementName=Root }"
+                Name="QQFolderListView" SelectionChanged="OnSelectQQFolder">
+                <ui:ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ui:Card>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+        
+                                <ui:TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="8,4" Text="{Binding}" />
+                                <ui:SymbolIcon Grid.Column="1" Symbol="ArrowRight48" FontSize="25" />
+                            </Grid>
+                        </ui:Card>
+                    </DataTemplate>
+                </ui:ListView.ItemTemplate>
+            </ui:ListView>
+        </Grid>
+    </Grid>
+</UserControl>

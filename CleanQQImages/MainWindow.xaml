@@ -1,0 +1,56 @@
+﻿<ui:FluentWindow
+    x:Class="CleanQQImages.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:local="clr-namespace:CleanQQImages"
+    mc:Ignorable="d"
+    x:Name="RootWindow"
+    WindowStartupLocation="CenterScreen"
+    ExtendsContentIntoTitleBar="True"
+    WindowBackdropType="Mica"
+    Title="QQ Group2 图片清理器" Width="854" Height="480">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <ui:TitleBar Title="QQ Group2 图片清理器" />
+        </Grid>
+
+        <Grid Grid.Row="1" ClipToBounds="True">
+            <local:Entry
+                x:Name="TheEntry" OnNext="EntryNext"
+                IsHitTestVisible="{Binding IsOnEntry, ElementName=RootWindow}">
+                <local:Entry.Style>
+                    <Style TargetType="local:Entry">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsOnEntry, ElementName=RootWindow}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:Entry.Style>
+            </local:Entry>
+
+            <local:Op
+                x:Name="TheOp" OnReturn="OpReturn"
+                IsHitTestVisible="{Binding IsOnOp, ElementName=RootWindow}">
+                <local:Op.Style>
+                    <Style TargetType="local:Op">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsOnOp, ElementName=RootWindow}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:Op.Style>
+            </local:Op>
+        </Grid>
+    </Grid>
+</ui:FluentWindow>

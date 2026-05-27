@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="CleanQQImages.Op"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:local="clr-namespace:CleanQQImages"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d"
+             x:Name="Root"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ProgressBar
+            Grid.Row="0"
+            IsIndeterminate="{Binding IsIndeterminate, ElementName=Root}"
+            Visibility="{Binding ProgressBarVisibility, ElementName=Root}" />
+
+        <ui:Card Grid.Row="1" Margin="10" IsHitTestVisible="{Binding AllHitTestVisible, ElementName=Root}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"></RowDefinition>
+                    <RowDefinition Height="45"></RowDefinition>
+                    <RowDefinition Height="45"></RowDefinition>
+                    <RowDefinition Height="45"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <ui:TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right">目标路径：</ui:TextBlock>
+                <ui:TextBox
+                    Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsReadOnly="true"
+                    Text="{Binding TargetPath, ElementName=Root, Mode=OneWay}" />
+
+                <ui:TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right">删除多久之前的：</ui:TextBlock>
+                <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox
+                        x:Name="SelectDateModeCombo"
+                        Grid.Column="0" VerticalAlignment="Center"
+                        IsEnabled="{Binding AllHitTestVisible,ElementName=Root}"
+                        SelectedIndex="{Binding TimeBefore, ElementName=Root}"
+                        SelectionChanged="OnSelectDateModeChange">
+                        <ComboBoxItem Content="指定时间之前" />
+                        <ComboBoxItem Content="一周前" />
+                        <ComboBoxItem Content="一个月前" />
+                        <ComboBoxItem Content="两个月前" />
+                        <ComboBoxItem Content="半年前" />
+                        <ComboBoxItem Content="一年前" />
+                        <ComboBoxItem Content="两年前" />
+                    </ComboBox>
+                    <ui:CalendarDatePicker
+                        x:Name="TheCalendarDatePicker"
+                        IsEnabled="{Binding AllHitTestVisible,ElementName=Root}"
+                        Margin="8,0,0,0"
+                        Grid.Column="1" VerticalAlignment="Center"
+                        Date="{Binding BeforeData, ElementName=Root, Mode=OneTime}"
+                        IsTodayHighlighted="True" />
+                    <ui:TextBlock
+                        Margin="8,0,0,0"
+                        Grid.Column="2" VerticalAlignment="Center"
+                        Text="{Binding BeforeDataText, ElementName=Root}" />
+                </Grid>
+
+                <ui:TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right">删除方式：</ui:TextBlock>
+                <ComboBox
+                    Grid.Row="2" Grid.Column="1"
+                    VerticalAlignment="Center"
+                    IsEnabled="{Binding AllHitTestVisible,ElementName=Root}"
+                    SelectedIndex="{Binding RunMode, ElementName=Root}">
+                    <ComboBoxItem Content="移动到回收站（很慢）" />
+                    <ComboBoxItem Content="直接删除" />
+                    <ComboBoxItem Content="仅搜索" />
+                </ComboBox>
+
+                <ui:TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" TextAlignment="Right">状态：</ui:TextBlock>
+                <ui:TextBlock
+                    Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
+                    Text="{Binding State,ElementName=Root}" />
+            </Grid>
+        </ui:Card>
+
+        <Grid Grid.Row="2" Margin="50, 0, 50, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ui:Button
+                x:Name="ReturnButton"
+                Grid.Column="1" Content="返 回"
+                IsEnabled="{Binding AllHitTestVisible,ElementName=Root}"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="20"
+                Click="OnReturnClicked" />
+            <ui:Button
+                x:Name="CancelButton"
+                Visibility="Collapsed"
+                Grid.Column="1" Content="取 消"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="20"
+                Click="OnCancelClicked" />
+            <ui:Button
+                Grid.Column="3" Content="开 始"
+                IsEnabled="{Binding AllHitTestVisible,ElementName=Root}"
+                Appearance="Primary" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="20"
+                Click="OnStartClicked" />
+        </Grid>
+    </Grid>
+</UserControl>
